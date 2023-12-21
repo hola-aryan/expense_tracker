@@ -21,9 +21,9 @@ function check(e) {
     }
   
     axios.post('http://localhost:2500/signIn', {
-        name : names,
-        email : emails,
-        password : passwords 
+        names : names,
+        emails : emails,
+        passwords : passwords
     })
       .then(res => {
         console.log(res);
@@ -34,8 +34,8 @@ function check(e) {
       })
       .finally(() => {
         // Reset form fields after request (whether success or failure)
-        compName.value = "";
-        cons.value = "";
-        pros.value = "";
+        naam.value = "";
+        email.value = "";
+        password.value = "";
       });
   }

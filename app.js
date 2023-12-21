@@ -13,15 +13,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // Add JSON body parsing middleware
 
 // Routes
-const reviewsRoutes = require('./routes/reviewsRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
 
 // Middleware function that serves static files and assets from frontend directory.
-app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, 'front_end')));
 
-app.use('/', reviewsRoutes);
+app.use('/', expenseRoutes);
 
 app.get('/', (req, res) => {
-  const indexPath = path.join(__dirname, './frontend/index.html');
+  const indexPath = path.join(__dirname, './front_end/index.html');
   res.sendFile(indexPath);
 });
 
