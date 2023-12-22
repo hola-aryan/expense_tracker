@@ -18,12 +18,31 @@ const expenseRoutes = require('./routes/expenseRoutes');
 // Middleware function that serves static files and assets from frontend directory.
 app.use(express.static(path.join(__dirname, 'front_end')));
 
+app.set('views', path.join(__dirname, 'front_end'));
+
+// Define routes
 app.use('/', expenseRoutes);
 
 app.get('/', (req, res) => {
-  const indexPath = path.join(__dirname, './front_end/index.html');
+  const indexPath = path.join(__dirname, 'front_end', 'index.html');
   res.sendFile(indexPath);
 });
+
+app.get('/signIn', (req, res) => {
+  const signInPath = path.join(__dirname, 'front_end', 'signIn.html');
+  res.sendFile(signInPath);
+});
+
+app.get('/signUp', (req, res) => {
+  const signUpPath = path.join(__dirname, 'front_end', 'index.html');
+  res.sendFile(signUpPath); 
+});
+
+app.get('/signedIn', (req, res) => {
+  const signedInPath = path.join(__dirname, 'front_end', 'signedIn.html');
+  res.sendFile(signedInPath);
+});
+
 
 // Database synchronization
 // method that synchronizes all defined models with the database by creating or updating the database table schema based on the model definitions

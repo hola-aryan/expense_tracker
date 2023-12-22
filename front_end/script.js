@@ -20,7 +20,7 @@ function check(e) {
       return;
     }
   
-    axios.post('http://localhost:2500/signIn', {
+    axios.post('http://localhost:2500/signUp', {
         names : names,
         emails : emails,
         passwords : passwords

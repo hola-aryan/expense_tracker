@@ -35,3 +35,34 @@ exports.addUser = async (req, res, next) => {
     }
     
   }; 
+
+  exports.signInUser = async (req, res, next) => {
+    console.log('Sign-in request received:', req.body);
+  
+    const { names, passwords } = req.body;
+  
+    try {
+      // Check if the user exists with the provided name
+      const existingUser = await expenseModels.findOne({
+        where: {
+          names: {
+            [Op.eq]: names,
+          },
+        },
+      });
+  
+      if (existingUser && existingUser.passwords === passwords) {
+        console.log('User credentials are correct, redirecting to third page');
+        // You can customize the redirect URL based on your route structure
+        res.redirect('/signedIn');
+      } else {
+        console.log('Invalid credentials, redirecting to signIn page');
+        // You can customize the redirect URL based on your route structure
+        res.redirect('/signIn');
+      }
+    } catch (error) {
+      console.error('Error processing sign-in:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  

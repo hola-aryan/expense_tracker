@@ -5,6 +5,10 @@ const expenseController = require('../controllers/expenseController');
 
 const router = express.Router();
 
-router.post('/signIn', expenseController.addUser);
+// Ye sirf saara daata bhejega
+router.post('/signUp', expenseController.addUser);
+
+//  Ye saara data dekhega + Rakhega + Check Karega
+router.post('/signIn', expenseController.signInUser);
 
 module.exports = router;
