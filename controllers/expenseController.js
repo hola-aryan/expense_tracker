@@ -1,6 +1,32 @@
 const expenseModels = require('../models/expenseModels');
 const { Op } = require('sequelize');
 
+exports.login = async (req, res) => {
+  const { name, password } = req.body;
+
+  try {
+    // Check if the user exists with the provided name
+    const existingUser = await expenseModels.findOne({
+      where: {
+        names: {
+          [Op.eq]: name,
+        },
+      },
+    });
+
+    if (existingUser && existingUser.passwords === password) {
+      console.log('User login successful');
+      return res.status(200).json({ message: 'User login successful' });
+    } else {
+      console.log('Invalid credentials');
+      return res.status(401).json({ message: 'User not authorized' });
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+}; 
+
 exports.addUser = async (req, res, next) => {
     console.log('Request received:', req.body); // Log the request body to check if data is reaching the server
   
@@ -11,15 +37,16 @@ exports.addUser = async (req, res, next) => {
     let exist = false;
     
     const existingUser = await expenseModels.findOne({
-        where: {
-            emails: {
-                [Op.eq]: emails,
-            },
+      where: {
+        names: {
+          [Op.eq]: names,
         },
+      },
     });
+    
 
     if (existingUser) {
-        console.log("Pehle se hai");
+        console.log("Pehle se hai"); 
         return;
     }
     else{
@@ -36,33 +63,4 @@ exports.addUser = async (req, res, next) => {
     
   }; 
 
-  exports.signInUser = async (req, res, next) => {
-    console.log('Sign-in request received:', req.body);
-  
-    const { names, passwords } = req.body;
-  
-    try {
-      // Check if the user exists with the provided name
-      const existingUser = await expenseModels.findOne({
-        where: {
-          names: {
-            [Op.eq]: names,
-          },
-        },
-      });
-  
-      if (existingUser && existingUser.passwords === passwords) {
-        console.log('User credentials are correct, redirecting to third page');
-        // You can customize the redirect URL based on your route structure
-        res.redirect('/signedIn');
-      } else {
-        console.log('Invalid credentials, redirecting to signIn page');
-        // You can customize the redirect URL based on your route structure
-        res.redirect('/signIn');
-      }
-    } catch (error) {
-      console.error('Error processing sign-in:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
   

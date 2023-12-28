@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/signUp', expenseController.addUser);
 
 //  Ye saara data dekhega + Rakhega + Check Karega
-router.post('/signIn', expenseController.signInUser);
+
+router.post('/login', expenseController.login);
 
 module.exports = router;
