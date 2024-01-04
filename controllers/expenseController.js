@@ -51,9 +51,13 @@ exports.addUser = async (req, res, next) => {
     }
     else{
         try {
-            const data = await expenseModels.create({ names, emails, passwords });
+          bcrypt.hash(passwords,10, async(err, hash)=>{
+            console.log(err);
+            const data = await expenseModels.create({ names, emails, hash });
             console.log("Data added to the database:", data);
             res.status(201).json({ newExpenseDetail: data });
+          })
+            
           } catch (error) {
             console.error('Error adding data to the database:', error);
             console.log("The value is not added");
